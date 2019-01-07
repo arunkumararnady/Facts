@@ -15,7 +15,7 @@ public class Repository {
     public LiveData<CountryData> getData() {
         // TODO
         final MutableLiveData<CountryData> data = new MutableLiveData<>();
-        PixService.createService().getCountryData().enqueue(new Callback<CountryData>() {
+        CountryService.createService().getCountryData().enqueue(new Callback<CountryData>() {
             @Override
             public void onResponse(Call<CountryData> call, Response<CountryData> response) {
                 data.setValue(response.body());

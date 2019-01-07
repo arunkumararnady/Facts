@@ -6,9 +6,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Class to creates pixservice.
+ * Class to create service.
  */
-public class PixService {
+public class CountryService {
 
     public static ServiceApi createService() {
         Retrofit.Builder builder = new Retrofit.Builder()

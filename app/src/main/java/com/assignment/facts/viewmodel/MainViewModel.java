@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.assignment.facts.data.CountryData;
+import com.assignment.facts.repository.Repository;
 
 public class MainViewModel extends ViewModel {
 
@@ -20,6 +21,10 @@ public class MainViewModel extends ViewModel {
      */
     public LiveData<CountryData> getCountryLiveData() {
         return countryData;
+    }
+
+    public void refresh() {
+        countryData = new Repository().getData();
     }
 
 }
