@@ -5,8 +5,7 @@ import android.util.Log;
 public class LogUtil {
 
     /**
-     * Logs error by printing the tag that contains the name of the class where the exception is thrown, message and the
-     * exception trace.
+     * Logs error by printing the tag that contains the name of the class where the exception is thrown, message.
      *
      * @param tag
      *     A tag to associate with the log.
