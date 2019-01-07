@@ -13,9 +13,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.fragment_container) != null) {
-            AboutFragment aboutCountryFragment = (AboutFragment) getSupportFragmentManager().findFragmentByTag("AboutFragment");
+            MainFragment aboutCountryFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("MainFragment");
             if (aboutCountryFragment == null) {
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new AboutFragment(), "AboutFragment").commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MainFragment(), "MainFragment").commit();
             }
         }
     }
