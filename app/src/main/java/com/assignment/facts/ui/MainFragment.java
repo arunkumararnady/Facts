@@ -88,9 +88,34 @@ public class MainFragment extends Fragment {
         });
     }
 
-    public void showListView(CountryData countryData) {
-        //TODO
+    public void showListView(CountryData countryModel) {
+        if (countryModel != null) {
+            if (recyclerAdapter == null) {
+                dataRebuild(countryModel);
+                recyclerAdapter = new RecyclerAdapter(getContext(), dataList);
+            }
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+            LinearLayoutManager manager = new LinearLayoutManager(getContext());
+            recyclerListView.setVisibility(View.VISIBLE);
+            recyclerListView.setAdapter(recyclerAdapter);
+            recyclerListView.setLayoutManager(manager);
+            DividerItemDecoration dividerDecoration = new DividerItemDecoration(recyclerListView.getContext(),
+                    manager.getOrientation());
+            recyclerListView.addItemDecoration(dividerDecoration);
+            recyclerAdapter.notifyDataSetChanged();
+        }
         showLoadingProgress(false);
+    }
+
+    private void dataRebuild(CountryData countryModel) {
+        dataList = countryModel.getRowsData();
+        for (int i = 0; i < dataList.size(); i++) {
+            if (dataList.get(i).getTitle() == null || dataList.get(i).getDescription() == null) {
+                dataList.remove(i);
+            }
+        }
     }
 
     public void showError() {
