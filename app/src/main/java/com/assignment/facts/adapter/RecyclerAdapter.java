@@ -13,6 +13,7 @@ import com.assignment.facts.LogUtil;
 import com.assignment.facts.R;
 import com.assignment.facts.data.RowData;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -51,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     .load(rowsModelObj.getImageURL())
                     .listener(requestListener)
                     .placeholder(R.drawable.ic_image_place_holder)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .error(R.drawable.error)
                     .into(holder.imageView);
         }

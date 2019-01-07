@@ -2,7 +2,6 @@ package com.assignment.facts.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
 import com.assignment.facts.LogUtil;
 import com.assignment.facts.data.CountryData;
@@ -14,7 +13,7 @@ import retrofit2.Response;
 public class Repository {
 
     public LiveData<CountryData> getData() {
-        // TODO
+        // TODO : we can cache the data here and reuse it if required.
         final MutableLiveData<CountryData> data = new MutableLiveData<>();
         CountryService.createService().getCountryData().enqueue(new Callback<CountryData>() {
             @Override

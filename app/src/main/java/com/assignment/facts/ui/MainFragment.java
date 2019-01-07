@@ -86,7 +86,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    public void updateUI(CountryData countryModel) {
+    private void updateUI(CountryData countryModel) {
         if (countryModel != null) {
             List<RowData> dataList  = countryModel.getRowsData();
             for (int i = 0; i < dataList.size(); i++) {
@@ -112,7 +112,7 @@ public class MainFragment extends Fragment {
         showLoadingProgress(false);
     }
 
-    public void showError() {
+    private void showError() {
         Snackbar.make(container, getString(R.string.error_message), Snackbar.LENGTH_LONG)
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
                 .show();

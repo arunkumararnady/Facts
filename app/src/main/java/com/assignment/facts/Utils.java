@@ -26,14 +26,10 @@ public class Utils {
     }
 
     /**
-     * Get the base url
+     * Check whther the device is online
      *
-     * @retrun baseUrl
+     * @retrun true if the device is online, false otherwise
      */
-    public String getBaseUrl() {
-        return Constants.getBaseUrl();
-    }
-
     public boolean isOnline(Context context) {
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

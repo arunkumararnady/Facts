@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Facts</string>
     <string name="error_message">Unable to fetch data. Please check your network connectivity or try again later</string>
+    <string name="activity_title">About</string>
 </resources>
