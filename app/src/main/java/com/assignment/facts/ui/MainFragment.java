@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.assignment.facts.R;
+import com.assignment.facts.Utils;
 import com.assignment.facts.adapter.RecyclerAdapter;
 import com.assignment.facts.data.CountryData;
 import com.assignment.facts.data.RowData;
@@ -46,7 +47,6 @@ public class MainFragment extends Fragment {
 
     private RecyclerAdapter recyclerAdapter;
     private MainViewModel mainViewModel;
-    private List<RowData> dataList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,39 +59,39 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    private void initData() {
-        if (!isOnline(getContext())) {
-            showError();
-        } else {
-            mainViewModel.refresh();
-            getViewModelData();
-        }
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
     }
 
-    private void getViewModelData() {
-        mainViewModel.getCountryLiveData().observe(this, new Observer<CountryData>() {
-            @Override
-            public void onChanged(@Nullable CountryData countryModel) {
-                countryModel = mainViewModel.getCountryLiveData().getValue();
-                if(countryModel != null) {
-                    dataList = countryModel.getRowsData();
-                    showListView(countryModel);
-                    getActionBar().setTitle(countryModel.getTitle());
+    private void initData() {
+        if (!Utils.getInstance().isOnline(getContext())) {
+            showError();
+        } else {
+            mainViewModel.refresh();
+            mainViewModel.getCountryLiveData().observe(this, new Observer<CountryData>() {
+                @Override
+                public void onChanged(@Nullable CountryData countryModel) {
+                    countryModel = mainViewModel.getCountryLiveData().getValue();
+                    if(countryModel != null) {
+                        updateUI(countryModel);
+                        getActionBar().setTitle(countryModel.getTitle());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
-    public void showListView(CountryData countryModel) {
+    public void updateUI(CountryData countryModel) {
         if (countryModel != null) {
+            List<RowData> dataList  = countryModel.getRowsData();
+            for (int i = 0; i < dataList.size(); i++) {
+                if (dataList.get(i).getTitle() == null && dataList.get(i).getDescription() == null) {
+                    dataList.remove(i);
+                }
+            }
             if (recyclerAdapter == null) {
-                dataRebuild(countryModel);
                 recyclerAdapter = new RecyclerAdapter(getContext(), dataList);
             }
             if (swipeRefreshLayout.isRefreshing()) {
@@ -109,17 +109,8 @@ public class MainFragment extends Fragment {
         showLoadingProgress(false);
     }
 
-    private void dataRebuild(CountryData countryModel) {
-        dataList = countryModel.getRowsData();
-        for (int i = 0; i < dataList.size(); i++) {
-            if (dataList.get(i).getTitle() == null || dataList.get(i).getDescription() == null) {
-                dataList.remove(i);
-            }
-        }
-    }
-
     public void showError() {
-        Snackbar.make(container, "Failed to get data!", Snackbar.LENGTH_LONG)
+        Snackbar.make(container, getString(R.string.error_message), Snackbar.LENGTH_LONG)
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
                 .show();
         showLoadingProgress(false);
@@ -138,11 +129,4 @@ public class MainFragment extends Fragment {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
-    public boolean isOnline(Context context) {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null &&
-                cm.getActiveNetworkInfo().isConnectedOrConnecting();
-    }
 }

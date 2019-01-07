@@ -3,13 +3,13 @@ package com.assignment.facts.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.assignment.facts.LogUtil;
 import com.assignment.facts.R;
 import com.assignment.facts.data.RowData;
 import com.bumptech.glide.Glide;
@@ -51,6 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     .load(rowsModelObj.getImageURL())
                     .listener(requestListener)
                     .placeholder(R.drawable.ic_image_place_holder)
+                    .error(R.drawable.error)
                     .into(holder.imageView);
         }
     }
@@ -76,8 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private RequestListener<String, GlideDrawable> requestListener = new RequestListener<String, GlideDrawable>() {
         @Override
         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-            // todo log exception
-            Log.e("RecyclerAdapter", e.getMessage());
+            LogUtil.error(RecyclerAdapter.class.getName(), e.getMessage());
             // important to return false so the error placeholder can be placed
             return false;
         }

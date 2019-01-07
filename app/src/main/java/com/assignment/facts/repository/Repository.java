@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.assignment.facts.LogUtil;
 import com.assignment.facts.data.CountryData;
 
 import retrofit2.Call;
@@ -23,9 +24,8 @@ public class Repository {
 
             @Override
             public void onFailure(Call<CountryData> call, Throwable t) {
-                Log.e("Repository", "server request failed");
+                LogUtil.error(Repository.class.getName(), "Server request failed : "+t.getMessage());
             }
-
         });
         return data;
     }

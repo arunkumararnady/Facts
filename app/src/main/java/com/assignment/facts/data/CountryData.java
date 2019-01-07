@@ -24,7 +24,7 @@ public class CountryData {
     }
 
     /**
-     * Get the rows data.
+     * Get the list of rows.
      *
      * @return The rows.
      */
