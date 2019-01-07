@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/progressbarLayout"
+        android:id="@+id/progressbar_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center">
@@ -17,7 +17,7 @@
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

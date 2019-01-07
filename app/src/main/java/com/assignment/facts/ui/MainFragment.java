@@ -2,8 +2,6 @@ package com.assignment.facts.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -33,17 +31,17 @@ import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment {
 
+    @BindView(R.id.about_fragment)
+    RelativeLayout container;
+
     @BindView(R.id.recycler_list)
     RecyclerView recyclerListView;
 
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.progressbarLayout)
+    @BindView(R.id.progressbar_layout)
     RelativeLayout progressBar;
-
-    @BindView(R.id.about_fragment)
-    RelativeLayout container;
 
     private RecyclerAdapter recyclerAdapter;
     private MainViewModel mainViewModel;
@@ -54,7 +52,12 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.about_fragment, container, false);
         ButterKnife.bind(this, view);
         showLoadingProgress(true);
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         return view;
     }
