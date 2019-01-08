@@ -3,6 +3,7 @@ package com.assignment.facts.injection;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.assignment.facts.Constants;
 import com.assignment.facts.repository.Repository;
 
 import javax.inject.Singleton;
@@ -31,6 +32,12 @@ public class AppModule {
     @Singleton
     Repository provideRepository(){
         return new Repository();
+    }
+
+    @Provides
+    @Singleton
+    Constants provideConstants(){
+        return new Constants();
     }
 
     @Provides

@@ -23,7 +23,11 @@ public class Repository {
         mServiceApi.getCountryData().enqueue(new Callback<CountryData>() {
             @Override
             public void onResponse(Call<CountryData> call, Response<CountryData> response) {
-                data.setValue(response.body());
+                if (response.isSuccessful()) {
+                    data.postValue(response.body());
+                } else {
+                    LogUtil.error(Repository.class.getName(), "Server request failed.");
+                }
             }
 
             @Override

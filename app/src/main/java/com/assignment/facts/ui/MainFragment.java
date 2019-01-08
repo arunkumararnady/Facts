@@ -51,12 +51,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.about_fragment, container, false);
         ButterKnife.bind(this, view);
         showLoadingProgress(true);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initData();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::initData);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         return view;
     }
@@ -71,7 +66,6 @@ public class MainFragment extends Fragment {
         if (!AppUtil.getInstance().isOnline(getContext())) {
             showError();
         } else {
-            mainViewModel.init();
             mainViewModel.getCountryLiveData().observe(this, this::updateUI);
         }
     }

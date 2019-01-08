@@ -17,6 +17,9 @@ public class CountryService {
     @Inject
     OkHttpClient okHttpClient;
 
+    @Inject
+    Constants constants;
+
     public CountryService() {
         FactsApp.getApp().getAppComponent().inject(this);
     }
@@ -25,7 +28,7 @@ public class CountryService {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
-                .baseUrl(Constants.getBaseUrl());
+                .baseUrl(constants.getBaseUrl());
 
         return builder.build().create(ServiceApi.class);
     }

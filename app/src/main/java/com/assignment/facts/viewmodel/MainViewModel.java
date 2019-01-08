@@ -19,6 +19,7 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel() {
         FactsApp.getApp().getAppComponent().inject(this);
+        countryData.addSource(repository.getData(), countryData::setValue);
     }
 
     /**
@@ -28,10 +29,6 @@ public class MainViewModel extends ViewModel {
      */
     public LiveData<CountryData> getCountryLiveData() {
         return countryData;
-    }
-
-    public void init() {
-        countryData.addSource(repository.getData(), countryData::setValue);
     }
 
 }

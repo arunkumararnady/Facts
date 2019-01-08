@@ -5,9 +5,9 @@ package com.assignment.facts;
  */
 public class Constants {
 
-    public static String BASE_URL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/";
+    private String BASE_URL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/";
 
-    public static String getBaseUrl() {
+    public String getBaseUrl() {
         return BASE_URL;
     }
 }
