@@ -1,12 +1,12 @@
 package com.assignment.facts.viewmodel;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.assignment.facts.FactsApp;
 import com.assignment.facts.data.CountryData;
-import com.assignment.facts.injection.AppComponent;
-import com.assignment.facts.injection.Appmodule;
-import com.assignment.facts.injection.DaggerAppComponent;
 import com.assignment.facts.repository.Repository;
 
 import javax.inject.Inject;
@@ -15,14 +15,10 @@ public class MainViewModel extends ViewModel {
 
     @Inject
     public Repository repository;
-    private LiveData<CountryData> countryData;
+    private MediatorLiveData<CountryData> countryData = new MediatorLiveData<>();
 
     public MainViewModel() {
-        AppComponent appComponent = DaggerAppComponent
-                .builder()
-                .appmodule(new Appmodule())
-                .build();
-        appComponent.inject(this);
+        FactsApp.getApp().getAppComponent().inject(this);
     }
 
     /**
@@ -34,8 +30,8 @@ public class MainViewModel extends ViewModel {
         return countryData;
     }
 
-    public void refresh() {
-        countryData = repository.getData();
+    public void init() {
+        countryData.addSource(repository.getData(), countryData::setValue);
     }
 
 }

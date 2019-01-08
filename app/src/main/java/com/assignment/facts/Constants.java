@@ -1,7 +1,7 @@
 package com.assignment.facts;
 
 /**
- * Constant values for the PixFinder Application.
+ * Constant values for the Application.
  */
 public class Constants {
 

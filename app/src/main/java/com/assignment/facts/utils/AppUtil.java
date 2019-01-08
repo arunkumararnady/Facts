@@ -1,4 +1,4 @@
-package com.assignment.facts;
+package com.assignment.facts.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,19 +6,19 @@ import android.net.ConnectivityManager;
 /**
  * A utility class.
  */
-public class Utils {
-    private static Utils sInstance = null;
+public class AppUtil {
+    private static AppUtil sInstance = null;
 
     /**
      * Returns an instance of utility class.
      *
      * @return The singleton utility
      */
-    public static synchronized Utils getInstance() {
+    public static synchronized AppUtil getInstance() {
         if (sInstance == null) {
-            synchronized (Utils.class) {
+            synchronized (AppUtil.class) {
                 if (sInstance == null) {
-                    sInstance = new Utils();
+                    sInstance = new AppUtil();
                 }
             }
         }
@@ -26,7 +26,7 @@ public class Utils {
     }
 
     /**
-     * Check whther the device is online
+     * Check whether the device is online
      *
      * @retrun true if the device is online, false otherwise
      */

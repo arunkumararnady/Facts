@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.assignment.facts.LogUtil;
+import com.assignment.facts.utils.LogUtil;
 import com.assignment.facts.R;
 import com.assignment.facts.data.RowData;
 import com.bumptech.glide.Glide;

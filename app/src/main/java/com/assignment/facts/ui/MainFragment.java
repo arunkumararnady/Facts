@@ -1,6 +1,5 @@
 package com.assignment.facts.ui;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.assignment.facts.R;
-import com.assignment.facts.Utils;
+import com.assignment.facts.utils.AppUtil;
 import com.assignment.facts.adapter.RecyclerAdapter;
 import com.assignment.facts.data.CountryData;
 import com.assignment.facts.data.RowData;
@@ -69,24 +68,16 @@ public class MainFragment extends Fragment {
     }
 
     private void initData() {
-        if (!Utils.getInstance().isOnline(getContext())) {
+        if (!AppUtil.getInstance().isOnline(getContext())) {
             showError();
         } else {
-            mainViewModel.refresh();
-            mainViewModel.getCountryLiveData().observe(this, new Observer<CountryData>() {
-                @Override
-                public void onChanged(@Nullable CountryData countryModel) {
-                    countryModel = mainViewModel.getCountryLiveData().getValue();
-                    if(countryModel != null) {
-                        updateUI(countryModel);
-                        getActionBar().setTitle(countryModel.getTitle());
-                    }
-                }
-            });
+            mainViewModel.init();
+            mainViewModel.getCountryLiveData().observe(this, this::updateUI);
         }
     }
 
     private void updateUI(CountryData countryModel) {
+        getActionBar().setTitle(countryModel.getTitle());
         if (countryModel != null) {
             List<RowData> dataList  = countryModel.getRowsData();
             for (int i = 0; i < dataList.size(); i++) {
