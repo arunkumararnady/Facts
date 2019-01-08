@@ -23,11 +23,17 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     Context context;
-    private List<RowData> rowsModels;
+    private List<RowData> rowDataList;
 
-    public RecyclerAdapter(Context context, List<RowData> rowsModels) {
+    public RecyclerAdapter(Context context, List<RowData> rowDataList) {
         this.context = context;
-        this.rowsModels = rowsModels;
+        this.rowDataList = rowDataList;
+    }
+
+    public void setRows(List<RowData> photoList) {
+        rowDataList.clear();
+        rowDataList.addAll(photoList);
+        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,7 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final @NonNull ViewHolder holder, int position) {
-        final RowData rowsModelObj = rowsModels.get(position);
+        final RowData rowsModelObj = rowDataList.get(position);
         holder.itemTitle.setText(rowsModelObj.getTitle());
         holder.description.setText(rowsModelObj.getDescription());
 
@@ -60,7 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return rowsModels.size();
+        return rowDataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

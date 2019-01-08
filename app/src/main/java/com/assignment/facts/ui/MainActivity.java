@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(R.string.activity_title);
-        if (findViewById(R.id.fragment_container) != null) {
+        if (savedInstanceState == null && findViewById(R.id.fragment_container) != null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new MainFragment())
                     .commitNow();

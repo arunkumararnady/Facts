@@ -12,3 +12,4 @@ Assumptions:
 TODO:
  -Improve LogUtil
  -Add test cases
+ -Orientation handling

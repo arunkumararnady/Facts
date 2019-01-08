@@ -23,6 +23,7 @@ import com.assignment.facts.data.CountryData;
 import com.assignment.facts.data.RowData;
 import com.assignment.facts.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,9 +51,7 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_fragment, container, false);
         ButterKnife.bind(this, view);
-        showLoadingProgress(true);
-        swipeRefreshLayout.setOnRefreshListener(this::initData);
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        initUI();
         return view;
     }
 
@@ -60,6 +59,21 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
+    }
+
+    private void initUI() {
+        showLoadingProgress(true);
+        swipeRefreshLayout.setOnRefreshListener(this::initData);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        if (recyclerAdapter == null) {
+            recyclerAdapter = new RecyclerAdapter(getContext(), new ArrayList<>());
+        }
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerListView.setAdapter(recyclerAdapter);
+        recyclerListView.setLayoutManager(manager);
+        DividerItemDecoration dividerDecoration = new DividerItemDecoration(recyclerListView.getContext(),
+                manager.getOrientation());
+        recyclerListView.addItemDecoration(dividerDecoration);
     }
 
     private void initData() {
@@ -79,20 +93,11 @@ public class MainFragment extends Fragment {
                     dataList.remove(i);
                 }
             }
-            if (recyclerAdapter == null) {
-                recyclerAdapter = new RecyclerAdapter(getContext(), dataList);
-            }
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
-            LinearLayoutManager manager = new LinearLayoutManager(getContext());
+            recyclerAdapter.setRows(dataList);
             recyclerListView.setVisibility(View.VISIBLE);
-            recyclerListView.setAdapter(recyclerAdapter);
-            recyclerListView.setLayoutManager(manager);
-            DividerItemDecoration dividerDecoration = new DividerItemDecoration(recyclerListView.getContext(),
-                    manager.getOrientation());
-            recyclerListView.addItemDecoration(dividerDecoration);
-            recyclerAdapter.notifyDataSetChanged();
         }
         showLoadingProgress(false);
     }
